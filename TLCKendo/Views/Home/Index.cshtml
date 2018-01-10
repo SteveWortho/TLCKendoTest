@@ -1,0 +1,56 @@
+﻿
+@model TLCKendo.Models.SearchModel
+
+@{
+    ViewBag.Title = "Index";
+}
+<script type="text/javascript">
+    function onAdditionalData() {
+        var category = $("#CategoryId").data("kendoMultiSelect").value;
+        return {
+            categoryId : category
+            };
+    }
+</script>
+<div class="row">
+    <div class="col-md-6">
+        <label>Category</label>
+        @(Html.Kendo().MultiSelectFor(x => x.CategoryId)
+                  .DataValueField("Id")
+                  .DataTextField("Name")
+                  .ClearButton(false)
+                  .DataSource(source =>
+                  {
+                      source.Read(read =>
+                      {
+                          read.Action("GetCategoryList", "Home");
+                      })
+                          .ServerFiltering(false);
+                  })
+                  .MaxSelectedItems(1)
+                  .HtmlAttributes(new { @class = "" }))
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        @(Html.Kendo().MultiSelectFor(x => x.CourseId)
+              .DataValueField("Id")
+              .DataTextField("Name")
+               .Placeholder("Select Course...")
+              .ClearButton(false)
+
+              .DataSource(source =>
+              {
+                  source.Read(read =>
+                  {
+                      read.Action("GetCourseCodeList", "Home");
+                  })
+                  .ServerFiltering(true);
+              })
+              .MaxSelectedItems(1)
+              .HtmlAttributes(new { @class = "" }))
+    </div>
+    <div class="col-md-6">
+
+    </div>
+</div>
