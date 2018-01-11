@@ -6,7 +6,8 @@
 }
 <script type="text/javascript">
     function onAdditionalData() {
-        var category = $("#CategoryId").data("kendoMultiSelect").Value;
+        var category = $("#CategoryId").data("kendoMultiSelect").value();
+        debugger;
         return {
             categoryId : category
             };
@@ -33,7 +34,8 @@
 </div>
 <div class="row">
     <div class="col-md-6">
-        @(Html.Kendo().MultiSelectFor(x => x.CourseId)
+        @(Html.Kendo().MultiSelect()
+        .Name("Course2")
               .DataValueField("Id")
               .DataTextField("Name")
               .Placeholder("Select Course...")
@@ -51,6 +53,21 @@
               .HtmlAttributes(new { @class = "" }))
     </div>
     <div class="col-md-6">
-
+        @(Html.Kendo().MultiSelectFor(x => x.CourseId)
+              .DataValueField("Id")
+              .DataTextField("Name")
+              .Placeholder("Select Course...")
+              .ClearButton(false)
+              .AutoBind(false)
+              .DataSource(source =>
+              {
+                  source.Read(read =>
+                  {
+                      read.Action("GetCourseCodeList", "Home").Data("onAdditionalData");
+                  })
+                      .ServerFiltering(true);
+              })
+              .MaxSelectedItems(1)
+              .HtmlAttributes(new { @class = "" }))
     </div>
 </div>
