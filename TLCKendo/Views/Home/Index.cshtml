@@ -6,7 +6,7 @@
 }
 <script type="text/javascript">
     function onAdditionalData() {
-        var category = $("#CategoryId").data("kendoMultiSelect").value;
+        var category = $("#CategoryId").data("kendoMultiSelect").Value;
         return {
             categoryId : category
             };
@@ -36,9 +36,9 @@
         @(Html.Kendo().MultiSelectFor(x => x.CourseId)
               .DataValueField("Id")
               .DataTextField("Name")
-               .Placeholder("Select Course...")
+              .Placeholder("Select Course...")
               .ClearButton(false)
-
+              .AutoBind(false)
               .DataSource(source =>
               {
                   source.Read(read =>

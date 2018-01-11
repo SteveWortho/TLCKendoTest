@@ -14,12 +14,12 @@ namespace TLCKendo.Controllers
 
         private List<SimpleLookupItem> _categoryData;
 
-        public HomeController()
-        {
-            // mock some course data
-            _courseData = GetCourseData();
-            _categoryData = GetCategoryData();
-        }
+        //public HomeController()
+        //{
+        //    // mock some course data
+        //    _courseData = GetCourseData();
+        //    _categoryData = GetCategoryData();
+        //}
 
         public ActionResult Index()
         {
@@ -33,17 +33,21 @@ namespace TLCKendo.Controllers
             var result = new JsonResult
             {
                 JsonRequestBehavior = JsonRequestBehavior.AllowGet,
-                Data = _categoryData
+                Data = GetCategoryData()
             };
             return result;
         }
         public JsonResult GetCourseCodeList(string text, int categoryId=0)
         {
-            var items = _courseData.Where(x =>
-                x.Name.Contains(text) &&
-                (categoryId == 0 || x.CategoryId == categoryId)).OrderBy(x => x.Name).ToList();
+            var search = string.Empty;
+            if (!string.IsNullOrEmpty(text))
+            {
+                search = text.ToLower();
+            }
 
-            var userinput = text;
+            var items = GetCourseData().Where(x =>
+                x.Name.ToLower().Contains(search) &&
+                (categoryId == 0 || x.CategoryId == categoryId)).OrderBy(x => x.Name).ToList();
 
             var result = new JsonResult
             {
