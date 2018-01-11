@@ -57,6 +57,28 @@ namespace TLCKendo.Controllers
             return result;
         }
 
+        public JsonResult GetCourseCodeListV2(int id, string text)
+        {
+            var search = string.Empty;
+            if (!string.IsNullOrEmpty(text))
+            {
+                search = text.ToLower();
+            }
+
+            var categoryId = id;
+
+            var items = GetCourseData().Where(x =>
+                x.Name.ToLower().Contains(search) &&
+                (categoryId == 0 || x.CategoryId == categoryId)).OrderBy(x => x.Name).ToList();
+
+            var result = new JsonResult
+            {
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet,
+                Data = items
+            };
+            return result;
+        }
+
         private List<SimpleLookupItem> GetCategoryData()
         {
             var categoryData = new List<SimpleLookupItem>();

@@ -35,7 +35,7 @@
 <div class="row">
     <div class="col-md-6">
         @(Html.Kendo().MultiSelect()
-        .Name("Course2")
+              .Name("Course2")
               .DataValueField("Id")
               .DataTextField("Name")
               .Placeholder("Select Course...")
@@ -47,10 +47,11 @@
                   {
                       read.Action("GetCourseCodeList", "Home");
                   })
-                  .ServerFiltering(true);
+                      .ServerFiltering(true);
               })
               .MaxSelectedItems(1)
               .HtmlAttributes(new { @class = "" }))
+        <p class="help-block">This one works fine and passes in the 'text' parameter for the user entered values.</p>
     </div>
     <div class="col-md-6">
         @(Html.Kendo().MultiSelectFor(x => x.CourseId)
@@ -69,5 +70,28 @@
               })
               .MaxSelectedItems(1)
               .HtmlAttributes(new { @class = "" }))
+        
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-6">
+        @(Html.Kendo().MultiSelect()
+                      .Name("Course3")
+                      .DataValueField("Id")
+                      .DataTextField("Name")
+                      .Placeholder("Select Course...")
+                      .ClearButton(false)
+                      .AutoBind(false)
+                      .DataSource(source =>
+                      {
+                          source.Read(read =>
+                          {
+                              read.Action("GetCourseCodeListV2", "Home", new {id = 24});
+                          })
+                              .ServerFiltering(true);
+                      })
+                      .MaxSelectedItems(1)
+                      .HtmlAttributes(new { @class = "" }))
+        <p class="help-block">This one has predefined Category filter.</p>
     </div>
 </div>
